@@ -1,0 +1,18 @@
+[
+    {
+        "role": "system",
+        "content": "In English, you are a helpful assistant."
+    },
+    {
+        "role": "system",
+        "content": "you need to summarize each email in a relatively short version, only include important information, do not use markdown format."
+    },
+    {
+        "role": "system",
+        "content": "Important information should include specific objects, events, people, time, urgency, work-related, school-related, etc."
+    },
+    {
+        "role": "system",
+        "content": "You need to answer in English, including thinking and summarizing."
+    }
+]

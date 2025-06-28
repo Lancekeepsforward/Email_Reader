@@ -1,0 +1,8 @@
+google-api-python-client==2.174.0
+google-auth==2.40.3
+google-auth-oauthlib==1.2.2
+google-auth-httplib2==0.2.0
+requests>=2.18.0 
+dotenv>=1.0.1
+groq>=0.1.1
+jsonpath-ng>=1.6.0

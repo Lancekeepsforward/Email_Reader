@@ -1,0 +1,60 @@
+# 环境变量
+.env
+
+# 测试
+test/
+
+# 记录文档
+docs/
+
+# 脚本
+scripts/
+
+# 配置
+config/*.json
+
+# 敏感文件 - 添加更具体的规则
+src/email_agent/config/token.json
+src/email_agent/config/client_secret*.json
+*.json
+!rules_agents.json
+!email_decoded_content.json
+!emails_id_threading.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 虚拟环境
+.venv/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 系统文件
+.DS_Store
+Thumbs.db
+

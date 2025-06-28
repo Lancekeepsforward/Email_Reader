@@ -1,0 +1,13 @@
+following files are now submited:
+    client_secret-xxx.json
+    email_decoded_content.json
+    emails_id_threading.json
+    project_rules.json
+    rules_agents.json
+    token.json
+
+to-do-list:
+    agent class
+    main entrance and utils connections
+    what is my final outputs
+    upgrade the agent architecture to support multi-agent collaboration, task delegation, and contextual reasoning
