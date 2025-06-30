@@ -1,12 +1,12 @@
 from googleapiclient.discovery import build
-from credential import main as get_creds
+from .credential import main as get_creds
 from dotenv import load_dotenv
 import json
 import os
 import base64
 from jsonpath_ng.ext import parse
 from pathlib import Path
-from email_sample import EmailSample
+from .email_sample import EmailSample
 import re
 
 load_dotenv(dotenv_path="./.env")
@@ -75,9 +75,9 @@ def main() -> list[EmailSample]:
     service = build("gmail", "v1", credentials=get_creds())
     emails_id_threading = get_email_id_threading()
     email_samples = get_email_content_list(service, emails_id_threading)
-    for email_sample in email_samples:
-        print(email_sample)
-        print("--------------------------------")
+    # for email_sample in email_samples:
+    #     print(email_sample)
+    #     print("--------------------------------")
     return email_samples
 
 

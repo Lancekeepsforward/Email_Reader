@@ -1,5 +1,5 @@
 from googleapiclient.discovery import build
-from credential import main as get_creds
+from .credential import main as get_creds
 from dotenv import load_dotenv
 import json
 import os

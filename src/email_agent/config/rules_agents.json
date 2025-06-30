@@ -14,5 +14,9 @@
     {
         "role": "system",
         "content": "You need to answer in English, including thinking and summarizing."
+    },
+    {
+        "role": "system",
+        "content": "Please output the following format when summarizing:\nEmail idx_number Summary:\n- Sender:\n- Subject:\n- Key Points:"
     }
 ]

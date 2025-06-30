@@ -1,4 +1,4 @@
-following files are now submited:
+following files are not submited:
     client_secret-xxx.json
     email_decoded_content.json
     emails_id_threading.json

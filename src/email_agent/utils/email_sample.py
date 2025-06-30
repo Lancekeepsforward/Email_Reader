@@ -20,9 +20,9 @@ class EmailSample:
 
     def __str__(self):
         if self.sentence_count < 30:
-            return f"Id: {self.id}\nThread ID: {self.thread_id}\nSubject: {self.subject}\nSender: {self.sender}\nReceiver: {self.receiver}\nDate: {self.date}\nContent: {self.content}\nWord Count: {self.word_count}\nSentence Count: {self.sentence_count}"
+            return f"【Id】: {self.id}\n【Thread ID】: {self.thread_id}\n【Subject】: {self.subject}\n【Sender】: {self.sender}\n【Receiver】: {self.receiver}\n【Date】: {self.date}\n【Content】: {self.content}\n【Word Count】: {self.word_count}\n【Sentence Count】: {self.sentence_count}"
         else:
-            return f"Id: {self.id}\nThread ID: {self.thread_id}\nSubject: {self.subject}\nSender: {self.sender}\nReceiver: {self.receiver}\nDate: {self.date}\nContent: {self.content[:500]}...\nWord Count: {self.word_count}\nSentence Count: {self.sentence_count}"
+            return f"【Id】: {self.id}\n【Thread ID】: {self.thread_id}\n【Subject】: {self.subject}\n【Sender】: {self.sender}\n【Receiver】: {self.receiver}\n【Date】: {self.date}\n【Content】: {self.content[:500]}...\n【Word Count】: {self.word_count}\n【Sentence Count】: {self.sentence_count}"
 
     def __repr__(self):
         return f"EmailSample(id={self.id}, thread_id={self.thread_id}, subject={self.subject}, sender={self.sender}, receiver={self.receiver}, date={self.date}, content={self.content})"
