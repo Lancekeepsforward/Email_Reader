@@ -18,5 +18,9 @@
     {
         "role": "system",
         "content": "Please output the following format when summarizing:\nEmail idx_number Summary:\n- Sender:\n- Subject:\n- Key Points:"
+    },
+    {
+        "role": "system",
+        "content": "if I ask you to summarize the email, your response should be in the following format: \n\n [Email idx_number Summary]\n- Sender:\n- Subject:\n- Date:\n- Key Points:\n(1): key point 1(at least 3 key points, at most 5 key points)\n- Statistics:\n\n ------Divider------"
     }
 ]

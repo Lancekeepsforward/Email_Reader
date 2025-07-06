@@ -8,6 +8,8 @@ class EmailSample:
         receiver: str = "",
         date: str = "",
         content: str = "",
+        word_count: int = None,
+        sentence_count: int = None,
     ):
         self.id = id
         self.thread_id = thread_id
@@ -16,17 +18,18 @@ class EmailSample:
         self.receiver = receiver
         self.date = date
         self.content = content
-        self.word_count, self.sentence_count = self.content_stats()
+        if (word_count is None or sentence_count is None) and len(content) > 0:
+            self.word_count, self.sentence_count = self.content_stats()
+        else:
+            self.word_count = word_count
+            self.sentence_count = sentence_count
 
     def __str__(self):
-        if self.sentence_count < 30:
-            return f"【Id】: {self.id}\n【Thread ID】: {self.thread_id}\n【Subject】: {self.subject}\n【Sender】: {self.sender}\n【Receiver】: {self.receiver}\n【Date】: {self.date}\n【Content】: {self.content}\n【Word Count】: {self.word_count}\n【Sentence Count】: {self.sentence_count}"
-        else:
-            return f"【Id】: {self.id}\n【Thread ID】: {self.thread_id}\n【Subject】: {self.subject}\n【Sender】: {self.sender}\n【Receiver】: {self.receiver}\n【Date】: {self.date}\n【Content】: {self.content[:500]}...\n【Word Count】: {self.word_count}\n【Sentence Count】: {self.sentence_count}"
+        return f"【Id】: {self.id}\n【Thread ID】: {self.thread_id}\n【Subject】: {self.subject}\n【Sender】: {self.sender}\n【Receiver】: {self.receiver}\n【Date】: {self.date}\n【Content】: {self.content}\n【Word Count】: {self.word_count}\n【Sentence Count】: {self.sentence_count}"
 
     def __repr__(self):
-        return f"EmailSample(id={self.id}, thread_id={self.thread_id}, subject={self.subject}, sender={self.sender}, receiver={self.receiver}, date={self.date}, content={self.content})"
-
+        return f"EmailSample(id={self.id}, thread_id={self.thread_id}, subject={self.subject}, sender={self.sender}, receiver={self.receiver}, date={self.date}, content={self.content}, word_count={self.word_count}, sentence_count={self.sentence_count})"
+    
     def __eq__(self, other):
         return self.id == other.id and self.thread_id == other.thread_id
 
@@ -68,6 +71,8 @@ class EmailSample:
         return self.thread_id
 
     def content_stats(self):
+        if len(self.content) == 0:
+            return 0, 0
         word_count = len(self.content.split())
         sentence_count = (
             len(self.content.split(".")) + len(self.content.split("\n"))
