@@ -58,3 +58,17 @@ ENV/
 .DS_Store
 Thumbs.db
 
+# Personal and sensitive files
+src/email_agent/config/ljs_columbia_email_saved.json
+src/email_agent/config/ljs_columbia_email_vectorstore.faiss/
+src/email_agent/config/token.json
+src/email_agent/config/emails_id_threading.json
+src/email_agent/config/email_decoded_content.json
+src/email_agent/config/client_secret_474406004863-1389mn84f0t6es9ekav3rdh4f8oe40jt.apps.googleusercontent.com.json
+
+# All JSON files in config (except those you want to keep tracked)
+src/email_agent/config/*.json
+
+# Model and embedding configs (if you want to ignore all jsons in embedding_models, uncomment below)
+# src/email_agent/config/embedding_models/**/*.json
+
