@@ -20,7 +20,7 @@ def get_items() -> list:
             maxResults=int(input("Enter the number of emails to fetch: "))
             or 10,  # max results can be set to 500
             q=input("Enter the query for fetching emails: ")
-            or "from:*@columbia.edu",  # default query is all Columbia emails
+            or "from:*@columbia.edu -subject:Spam -from:me",  # default query is all Columbia emails
             # format="metadata" # format can be set to "metadata" or "full"
             # includeSpamTrash=True # include spam and trash emails
         )

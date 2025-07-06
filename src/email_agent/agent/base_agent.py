@@ -2,6 +2,8 @@
 import os
 import json
 import warnings
+import time
+from datetime import datetime, timedelta
 from typing import List
 from pathlib import Path
 from dotenv import load_dotenv
@@ -23,6 +25,19 @@ load_dotenv(dotenv_path=".env")
 CONFIG_DIR = os.getenv("CONFIG_DIR")
 RULES_AGENTS = json.loads(Path(CONFIG_DIR, "rules_agents.json").read_text(encoding="utf-8"))
 
+class tools:
+    """
+    Tools for the agent to use
+    - numerical_input: Input a numerical value
+    """
+    @staticmethod
+    def numerical_input(prompt: str) -> int:
+        """Input a numerical value"""
+        while not prompt.isdigit() and prompt != "0":
+            prompt = input("Please input a numerical value: ")
+        return int(prompt)
+
+    
 class BaseAgent:
     """RAG + Agent architecture based on LangChain"""
     def __init__(self, model_name: str = None):
@@ -49,6 +64,9 @@ class BaseAgent:
         self.rag_retriever = self._init_rag_retriever()
         self.saved_emails = {"id": []}
         self.new_emails = []
+        self.token_limit_per_minute = 6000
+        self.token_spent_per_minute = 0
+        self.query_time = datetime.min
 
     def _init_rag_retriever(self) -> FAISS:
         """Initialize RAG retriever. Only load if exists; do not create with dummy text."""
@@ -109,20 +127,39 @@ class BaseAgent:
         """Get prompt for RAG retrieval"""
         system_prompt = "\n\n".join([msg["content"] for msg in RULES_AGENTS if msg["role"] == "system"])
         prompt = f"""
-        You are a helpful email assistant.
-        system_prompt: {system_prompt}
+You are a helpful email assistant.
+system_prompt: 
+{system_prompt}
 
-        user_input: {user_input}
+user_input: 
+{user_input}
 
-        Reference the following email materials:
-        {email_content}
+Reference the following email materials:
+{email_content}
         """
         return prompt
 
-    def _get_response(self, user_input: str) -> dict:
+    def _get_prompt_from_user_input(self, user_input: str) -> str:
         """Process user input, combine RAG retrieval and historical messages to generate response"""
-        emails = self._get_top_k_emails(user_input, int(input("How many emails to retrieve? (default: 5) :")))
+        emails = self._get_top_k_emails(user_input, tools.numerical_input(input("How many emails to retrieve? (default: 5) :")))
         prompt = self._get_prompt(user_input, emails)
+        return prompt
+
+    def _check_token_limit(self, prompt: str) -> bool:
+        """Check if the prompt is too long"""
+        token_needed = self.model.get_num_tokens(prompt)
+        if datetime.now() - self.query_time > timedelta(minutes=1):
+            self.token_spent_per_minute = 0
+            self.query_time = datetime.now()
+        if self.token_spent_per_minute + token_needed < self.token_limit_per_minute:
+            self.token_spent_per_minute += token_needed
+            return True
+        else:
+            print(f"Token limit reached, please wait for 1 minute since {self.query_time.strftime('%Y-%m-%d %H:%M:%S')}.")
+            print(f"Token spent: {self.token_spent_per_minute}")
+            return False
+
+    def _get_response_from_prompt(self, prompt: str) -> dict:
         response = self.conversation_chain.invoke(prompt)
         return response
 
@@ -135,7 +172,10 @@ class BaseAgent:
             if user_input.lower() in ["exit", "quit"]:
                 print("Bye!")
                 break
-            response = self._get_response(user_input)
+            prompt = self._get_prompt_from_user_input(user_input)
+            if not self._check_token_limit(prompt):
+                continue
+            response = self._get_response_from_prompt(prompt)
             print(f"Agent: {response['response']}")
     
 
